@@ -1,0 +1,68 @@
+1. User Registration and Authentication:
+
+    Users can register with basic information (username, email, password) and log in.
+    Passwords should be securely hashed and stored.
+
+2. Transaction Management (CRUD):
+
+    Users can add new financial transactions, specifying date, type (income or expense), category, description, and amount.
+    Users can view a list of their transactions with pagination and sorting options.
+    Users can update or delete existing transactions.
+
+3. Categorization:
+
+    Users can assign transactions to predefined or user-defined categories (e.g., groceries, entertainment, salary).
+    Users can add, edit, or delete categories.
+
+4. Filtering and Sorting:
+
+    Users can filter transactions by date range, type (income or expense), and category.
+    Provide sorting options to arrange transactions by date or amount.
+
+5. Responsive Frontend:
+
+    Develop a responsive frontend using Angular or React for easy use on different devices.
+
+6. Basic UI:
+
+    Create a simple and user-friendly interface for adding, editing, and deleting transactions.
+
+7. Data Validation:
+
+    Implement validation to ensure that required fields are filled correctly before submitting transactions.
+
+8. Error Handling:
+
+    Display meaningful error messages when transactions cannot be added, updated, or deleted.
+
+9. Data Persistence:
+
+    Store transaction data securely in a backend database using Spring Boot's data persistence mechanisms.
+
+10. Readme/Documentation:
+- Provide basic documentation or a README file explaining how to set up and run the application.
+
+
+
+Entities:
+
+    User:
+        Attributes: ID (Primary Key), Username, Email, Password
+
+    Transaction:
+        Attributes: ID (Primary Key), Date, Type (Income/Expense), Amount, Description
+        Relationships:
+            Many-to-One with User (Each transaction belongs to a user)
+            Many-to-One with Category (Each transaction belongs to a category)
+
+    Category:
+        Attributes: ID (Primary Key), Name
+        Relationships:
+            One-to-Many with Transaction (One category can have many transactions)
+
+ERD Relationships:
+
+    User can have many transactions (One-to-Many)
+    Transaction belongs to one user (Many-to-One)
+    Transaction belongs to one category (Many-to-One)
+    Category can have many transactions (One-to-Many)

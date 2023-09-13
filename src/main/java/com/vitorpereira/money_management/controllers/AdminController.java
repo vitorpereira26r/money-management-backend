@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/test")
+@RequestMapping(value = "/admin")
 @CrossOrigin("*")
-public class TestController {
+public class AdminController {
 
     @GetMapping
-    public ResponseEntity<String> test(){
-        return ResponseEntity.ok("Ok");
+    public ResponseEntity<String> adminAccess(){
+        return ResponseEntity.ok("Admin level access");
     }
 }

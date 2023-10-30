@@ -5,14 +5,14 @@ import com.vitorpereira.money_management.entities.UserApplication;
 public class LoginResponseDto {
 
     private UserApplication user;
-    private String jwt;
+    private String token;
 
     public LoginResponseDto() {
     }
 
-    public LoginResponseDto(UserApplication user, String jwt) {
+    public LoginResponseDto(UserApplication user, String token) {
         this.user = user;
-        this.jwt = jwt;
+        this.token = token;
     }
 
     public UserApplication getUser() {
@@ -23,11 +23,11 @@ public class LoginResponseDto {
         this.user = user;
     }
 
-    public String getJwt() {
-        return jwt;
+    public String getToken() {
+        return token;
     }
 
-    public void setJwt(String jwt) {
-        this.jwt = jwt;
+    public void setToken(String token) {
+        this.token = token;
     }
 }

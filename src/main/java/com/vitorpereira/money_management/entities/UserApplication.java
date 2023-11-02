@@ -1,15 +1,14 @@
 package com.vitorpereira.money_management.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
-@Table(name = "users_db")
+@Table(name = "tb_users")
 public class UserApplication implements UserDetails {
 
     @Id
@@ -20,6 +19,15 @@ public class UserApplication implements UserDetails {
     private String username;
     private String password;
 
+    private Double balance;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<Account> accounts = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<Transaction> transactions = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -31,12 +39,14 @@ public class UserApplication implements UserDetails {
 
     public UserApplication() {
         authorities = new HashSet<>();
+        balance = 0.0;
     }
 
     public UserApplication(Integer id, String username, String password, Set<Role> authorities) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.balance = 0.0;
         this.authorities = authorities;
     }
 
@@ -75,6 +85,22 @@ public class UserApplication implements UserDetails {
         return username;
     }
 
+    public Double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -93,5 +119,31 @@ public class UserApplication implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserApplication that = (UserApplication) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "UserApplication{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", balance=" + balance +
+                ", accounts=" + accounts +
+                ", transactions=" + transactions +
+                ", authorities=" + authorities +
+                '}';
     }
 }

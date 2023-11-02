@@ -56,8 +56,12 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         return http
                 .csrf(csrf -> csrf.disable())
+                .headers((headers) ->
+                                headers.frameOptions(Customizer.withDefaults()).disable()
+                        )
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(antMatcher("/auth/**")).permitAll();
+                    auth.requestMatchers(antMatcher("/h2-console/**")).permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)

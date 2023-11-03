@@ -6,11 +6,12 @@ import com.vitorpereira.money_management.entities.Transaction;
 import com.vitorpereira.money_management.entities.UserApplication;
 import com.vitorpereira.money_management.entities.dtos.TransactionDto;
 import com.vitorpereira.money_management.entities.dtos.TransactionEditDto;
-import com.vitorpereira.money_management.entities.enums.TransactionType;
+import com.vitorpereira.money_management.exceptions.DatabaseException;
 import com.vitorpereira.money_management.exceptions.ResourceNotFoundException;
 import com.vitorpereira.money_management.repository.TransactionRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.criteria.CriteriaBuilder;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -60,6 +61,18 @@ public class TransactionService {
         catch(EntityNotFoundException e){
             System.out.println(e.getMessage());
             throw new ResourceNotFoundException(id);
+        }
+    }
+
+    public void deleteTransactionById(Integer id){
+        try{
+            repository.deleteById(id);
+        }
+        catch(EmptyResultDataAccessException e){
+            throw new ResourceNotFoundException(id);
+        }
+        catch(DataIntegrityViolationException e){
+            throw new DatabaseException(e.getMessage());
         }
     }
 

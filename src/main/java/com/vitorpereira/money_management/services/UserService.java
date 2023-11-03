@@ -1,21 +1,19 @@
 package com.vitorpereira.money_management.services;
 
-import com.vitorpereira.money_management.entities.Account;
-import com.vitorpereira.money_management.entities.Role;
 import com.vitorpereira.money_management.entities.UserApplication;
 import com.vitorpereira.money_management.entities.dtos.UserEditDto;
+import com.vitorpereira.money_management.exceptions.DatabaseException;
 import com.vitorpereira.money_management.exceptions.ResourceNotFoundException;
 import com.vitorpereira.money_management.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -61,6 +59,18 @@ public class UserService implements UserDetailsService {
         }
         catch (EntityNotFoundException e){
             throw new ResourceNotFoundException(id);
+        }
+    }
+
+    public void deleteUserById(Integer id){
+        try{
+            userRepository.deleteById(id);
+        }
+        catch(EmptyResultDataAccessException e){
+            throw new ResourceNotFoundException(id);
+        }
+        catch(DataIntegrityViolationException e){
+            throw new DatabaseException(e.getMessage());
         }
     }
 }

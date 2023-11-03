@@ -59,6 +59,10 @@ public class ApplicationServices {
         return account;
     }
 
+    public void deleteAccount(Integer id){
+        accountService.deleteById(id);
+    }
+
     public List<Transaction> getTransactionByUserId(Integer id){
         List<Transaction> transactions = transactionService.getTransactionsByUserId(id);
         return transactions;
@@ -107,5 +111,9 @@ public class ApplicationServices {
         userService.updateBalance(amount, user.getId());
 
         return transaction;
+    }
+
+    public void deleteTransaction(Integer id){
+        transactionService.deleteTransactionById(id);
     }
 }

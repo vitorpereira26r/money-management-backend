@@ -23,22 +23,28 @@ public class ApplicationController {
         this.service = service;
     }
 
-    @GetMapping(value = "/accounts/{id}")
+    @GetMapping(value = "/accounts/user-id/{id}")
     public ResponseEntity<List<Account>> getAccountsByUserId(@PathVariable Integer id){
         List<Account> accounts = service.getAccountByUserId(id);
         return ResponseEntity.ok(accounts);
     }
 
-    @PostMapping(value = "/account-create")
+    @PostMapping(value = "/account/create")
     public ResponseEntity<Account> createAccount(@RequestBody AccountDto dto){
         Account account = service.createAccount(dto);
         return ResponseEntity.ok(account);
     }
 
-    @PutMapping(value = "/account-edit-name/{id}")
+    @PutMapping(value = "/account/edit/{id}")
     public ResponseEntity<Account> editAccountName(@RequestBody AccountEditDto dto, @PathVariable Integer id){
         Account newAccount = service.editAccountName(dto.getName(), id);
         return ResponseEntity.ok(newAccount);
+    }
+
+    @DeleteMapping(value = "/account/delete/{id}")
+    public ResponseEntity<Void> deleteAccount(@PathVariable Integer id){
+        service.deleteAccount(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping(value = "/transactions/user-id/{id}")
@@ -53,15 +59,21 @@ public class ApplicationController {
         return ResponseEntity.ok(transactions);
     }
 
-    @PostMapping(value = "/transaction-create")
+    @PostMapping(value = "/transaction/create")
     public ResponseEntity<Transaction> createTransaction(@RequestBody TransactionDto dto){
         Transaction transaction = service.createTransaction(dto);
         return ResponseEntity.ok(transaction);
     }
 
-    @PutMapping(value = "/transaction-edit/{id}")
+    @PutMapping(value = "/transaction/edit/{id}")
     public ResponseEntity<Transaction> editTransaction(@RequestBody TransactionEditDto dto, @PathVariable Integer id){
         Transaction transaction = service.editTransaction(dto, id);
         return ResponseEntity.ok(transaction);
+    }
+
+    @DeleteMapping(value = "/transaction/delete/{id}")
+    public ResponseEntity<Void> deleteTransaction(@PathVariable Integer id){
+        service.deleteTransaction(id);
+        return ResponseEntity.noContent().build();
     }
 }

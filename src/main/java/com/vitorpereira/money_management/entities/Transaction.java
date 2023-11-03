@@ -70,12 +70,12 @@ public class Transaction implements Serializable {
         this.date = date;
     }
 
-    public Integer getType() {
-        return type;
+    public TransactionType getType() {
+        return TransactionType.valueOf(type);
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setType(TransactionType type) {
+        this.type = type.getCode();
     }
 
     public Double getAmount() {
@@ -108,6 +108,14 @@ public class Transaction implements Serializable {
 
     public void setUser(UserApplication user) {
         this.user = user;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override

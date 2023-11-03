@@ -1,6 +1,7 @@
 package com.vitorpereira.money_management.controllers;
 
 import com.vitorpereira.money_management.entities.UserApplication;
+import com.vitorpereira.money_management.entities.dtos.UserEditDto;
 import com.vitorpereira.money_management.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,12 @@ public class UserController {
     @GetMapping(value = "/validate/{id}")
     public ResponseEntity<UserApplication> validateToken(@PathVariable Integer id){
         UserApplication user = service.getUserById(id);
+        return ResponseEntity.ok(user);
+    }
+
+    @PutMapping(value = "/edit/{id}")
+    public ResponseEntity<UserApplication> editUser(@PathVariable Integer id, @RequestBody UserEditDto dto){
+        UserApplication user = service.editUser(id, dto);
         return ResponseEntity.ok(user);
     }
 }

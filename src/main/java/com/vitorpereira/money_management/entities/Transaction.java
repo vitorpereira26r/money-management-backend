@@ -1,5 +1,6 @@
 package com.vitorpereira.money_management.entities;
 
+import com.vitorpereira.money_management.entities.enums.TransactionType;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -36,7 +37,7 @@ public class Transaction implements Serializable {
     public Transaction(
             Integer id,
             Instant date,
-            Integer type,
+            TransactionType type,
             Double amount,
             String description,
             Account account,
@@ -45,7 +46,7 @@ public class Transaction implements Serializable {
     ) {
         this.id = id;
         this.date = date;
-        this.type = type;
+        this.type = type.getCode();
         this.amount = amount;
         this.description = description;
         this.account = account;

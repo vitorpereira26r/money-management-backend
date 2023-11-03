@@ -1,6 +1,7 @@
 package com.vitorpereira.money_management;
 
 import com.vitorpereira.money_management.entities.*;
+import com.vitorpereira.money_management.entities.enums.TransactionType;
 import com.vitorpereira.money_management.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -46,7 +47,7 @@ public class MoneyManagementApplication {
 			Category category = new Category(null, "Buy");
 			categoryRepository.save(category);
 
-			Transaction transaction = new Transaction(null, Instant.now(), 0, 0.0, "buy", account, admin, category);
+			Transaction transaction = new Transaction(null, Instant.now(), TransactionType.EXPENSE, 0.0, "buy", account, admin, category);
 			transactionRepository.save(transaction);
 		};
 	}

@@ -4,8 +4,8 @@ import com.vitorpereira.money_management.entities.UserApplication;
 
 public class LoginResponseDto {
 
-    private UserApplication user;
     private String token;
+    private UserApplication user;
 
     public LoginResponseDto() {
     }

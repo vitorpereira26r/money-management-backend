@@ -70,7 +70,12 @@ public class AccountService {
 
     public void deleteById(Integer id){
         try{
-            repository.deleteById(id);
+            if(repository.existsById(id)){
+                repository.deleteById(id);
+            }
+            else{
+                throw new ResourceNotFoundException(id);
+            }
         }
         catch(EmptyResultDataAccessException e){
             throw new ResourceNotFoundException(id);

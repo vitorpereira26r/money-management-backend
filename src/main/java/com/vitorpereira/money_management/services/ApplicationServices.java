@@ -8,7 +8,11 @@ import com.vitorpereira.money_management.entities.dtos.AccountDto;
 import com.vitorpereira.money_management.entities.dtos.TransactionDto;
 import com.vitorpereira.money_management.entities.dtos.TransactionEditDto;
 import com.vitorpereira.money_management.entities.enums.TransactionType;
+import com.vitorpereira.money_management.exceptions.DatabaseException;
+import com.vitorpereira.money_management.exceptions.ResourceNotFoundException;
 import jakarta.persistence.criteria.CriteriaBuilder;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,7 +64,15 @@ public class ApplicationServices {
     }
 
     public void deleteAccount(Integer id){
-        accountService.deleteById(id);
+        try{
+            accountService.deleteById(id);
+        }
+        catch(EmptyResultDataAccessException e){
+            throw new ResourceNotFoundException(id);
+        }
+        catch(DataIntegrityViolationException e){
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public List<Transaction> getTransactionByUserId(Integer id){

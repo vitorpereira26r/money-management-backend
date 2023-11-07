@@ -51,7 +51,7 @@ public class AuthenticationService {
         Set<Role> roles = new HashSet<>();
         roles.add(userRole);
 
-        return userRepository.save(new UserApplication(0, registerDto.getUsername(), encodedPassword, roles));
+        return userRepository.save(new UserApplication(null, registerDto.getUsername(), encodedPassword, roles));
     }
 
     public LoginResponseDto login(CredentialDto credentialDto){

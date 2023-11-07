@@ -52,6 +52,10 @@ public class TransactionService {
         return transactions;
     }
 
+    public Transaction getTransactionById(Integer id){
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+    }
+
     public Transaction editTransaction(TransactionEditDto dto, Integer id){
         try{
             Transaction entity = repository.getReferenceById(id);
@@ -66,7 +70,12 @@ public class TransactionService {
 
     public void deleteTransactionById(Integer id){
         try{
-            repository.deleteById(id);
+            if(repository.existsById(id)){
+                repository.deleteById(id);
+            }
+            else{
+                throw new ResourceNotFoundException(id);
+            }
         }
         catch(EmptyResultDataAccessException e){
             throw new ResourceNotFoundException(id);

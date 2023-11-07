@@ -126,6 +126,26 @@ public class ApplicationServices {
     }
 
     public void deleteTransaction(Integer id){
+        Transaction transaction = transactionService.getTransactionById(id);
+
+        Double amount = 0.0;
+        if(transaction.getType() == TransactionType.EXPENSE){
+            amount = transaction.getAmount();
+        }
+        else{
+            amount = transaction.getAmount() * (-1);
+        }
+
+        UserApplication user = transaction.getUser();
+        Account account = transaction.getAccount();
+
+        accountService.updateBalance(amount, account.getId());
+        userService.updateBalance(amount, user.getId());
+
         transactionService.deleteTransactionById(id);
+    }
+
+    public List<Category> getCategories(){
+        return categoryService.getCategories();
     }
 }

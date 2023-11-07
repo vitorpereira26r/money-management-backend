@@ -5,6 +5,7 @@ import com.vitorpereira.money_management.exceptions.ResourceNotFoundException;
 import com.vitorpereira.money_management.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,5 +21,9 @@ public class CategoryService {
         Optional<Category> obj = repository.findById(id);
 
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+    }
+
+    public List<Category> getCategories(){
+        return repository.findAll();
     }
 }

@@ -19,7 +19,7 @@ public class MoneyManagementApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MoneyManagementApplication.class, args);
 	}
-
+/*
 	@Bean
 	CommandLineRunner run(
             AccountRepository accountRepository,
@@ -50,5 +50,5 @@ public class MoneyManagementApplication {
 			Transaction transaction = new Transaction(null, Instant.now(), TransactionType.EXPENSE, 0.0, "buy", account, admin, category);
 			transactionRepository.save(transaction);
 		};
-	}
+	}*/
 }

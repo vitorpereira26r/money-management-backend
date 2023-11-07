@@ -1,6 +1,7 @@
 package com.vitorpereira.money_management.controllers;
 
 import com.vitorpereira.money_management.entities.Account;
+import com.vitorpereira.money_management.entities.Category;
 import com.vitorpereira.money_management.entities.Transaction;
 import com.vitorpereira.money_management.entities.dtos.AccountDto;
 import com.vitorpereira.money_management.entities.dtos.AccountEditDto;
@@ -75,5 +76,11 @@ public class ApplicationController {
     public ResponseEntity<Void> deleteTransaction(@PathVariable Integer id){
         service.deleteTransaction(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/categories")
+    public ResponseEntity<List<Category>> getCategories(){
+        List<Category> categories = service.getCategories();
+        return ResponseEntity.ok(categories);
     }
 }

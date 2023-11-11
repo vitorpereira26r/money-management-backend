@@ -13,4 +13,4 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: adf14500
     ports:
-      - 3305:3306
+      - 3306:3306

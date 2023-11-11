@@ -1,10 +1,4 @@
 
-FROM docker/compose:1.29.2 as compose
-
-COPY docker/docker-compose-mysql.yaml .
-
-RUN docker-compose -f docker-compose-mysql.yaml up -d
-
 FROM maven:3.8.3-openjdk-17 AS build
 COPY . .
 RUN mvn clean package -DskipTests

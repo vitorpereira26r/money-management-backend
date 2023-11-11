@@ -1,7 +1,7 @@
 
 FROM docker/compose:1.29.2 as compose
 
-COPY docker-compose-mysql.yaml .
+COPY docker/docker-compose-mysql.yaml .
 
 RUN docker-compose -f docker-compose-mysql.yaml up -d
 

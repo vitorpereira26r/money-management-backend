@@ -66,7 +66,7 @@ public class ApplicationServices {
     public void deleteAccount(Integer id){
         try{
             Account acc = accountService.getAccountById(id);
-            Double amount = acc.getBalance();
+            Double amount = acc.getBalance() * (-1);
 
             userService.updateBalance(amount, acc.getUser().getId());
 

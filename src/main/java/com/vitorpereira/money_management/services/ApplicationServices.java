@@ -65,6 +65,11 @@ public class ApplicationServices {
 
     public void deleteAccount(Integer id){
         try{
+            Account acc = accountService.getAccountById(id);
+            Double amount = acc.getBalance();
+
+            userService.updateBalance(amount, acc.getUser().getId());
+
             accountService.deleteById(id);
         }
         catch(EmptyResultDataAccessException e){

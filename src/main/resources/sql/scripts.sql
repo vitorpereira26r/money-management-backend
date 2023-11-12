@@ -10,6 +10,17 @@ SELECT role_id, authority
 SELECT user_id, balance, password, username
 	FROM public.tb_users;
 	
+SELECT user_id, role_id
+	FROM public.user_role_junction;
+	
+UPDATE public.user_role_junction
+	SET user_id=?, role_id=?
+	WHERE <condition>;
+	
+INSERT INTO public.user_role_junction(
+	user_id, role_id)
+	VALUES (1, 1);
+	
 SELECT id, name
 	FROM public.tb_categories;
 

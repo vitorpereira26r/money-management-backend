@@ -1,0 +1,11 @@
+postgres://oaomirmxkbtwek:2a0d553d583284d8df344b5754f8d2091829822df750f585c1950db27ee43e8f@ec2-44-213-228-107.compute-1.amazonaws.com:5432/dckj2hgsimvmvu
+
+username: oaomirmxkbtwek
+
+password: 2a0d553d583284d8df344b5754f8d2091829822df750f585c1950db27ee43e8f
+
+server: ec2-44-213-228-107.compute-1.amazonaws.com
+
+port: 5432
+
+database: dckj2hgsimvmvu

@@ -10,7 +10,6 @@ import com.vitorpereira.money_management.entities.dtos.TransactionEditDto;
 import com.vitorpereira.money_management.entities.enums.TransactionType;
 import com.vitorpereira.money_management.exceptions.DatabaseException;
 import com.vitorpereira.money_management.exceptions.ResourceNotFoundException;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -111,15 +110,39 @@ public class ApplicationServices {
     }
 
     public Transaction editTransaction(TransactionEditDto dto, Integer id){
+        Transaction transactionBeforeEdit = transactionService.getTransactionById(id);
+        TransactionType typeBeforeEdit = transactionBeforeEdit.getType();
+        Double amountBeforeEdit = transactionBeforeEdit.getAmount();
         Transaction transaction = transactionService.editTransaction(dto, id);
 
+        System.out.println("Type before edit: " + typeBeforeEdit);
+        System.out.println("Amount before edit: " + amountBeforeEdit);
+
+        System.out.println("Type after edit: " + transaction.getType());
+        System.out.println("Amount after edit: " + transaction.getAmount());
+
         Double amount = 0.0;
-        if(transaction.getType() == TransactionType.EXPENSE){
-            amount = transaction.getAmount() * (-1);
+        if(typeBeforeEdit == TransactionType.EXPENSE){
+            if(transaction.getType() == TransactionType.EXPENSE){
+                System.out.println(1);
+                amount = amountBeforeEdit - transaction.getAmount();
+            }
+            else if(transaction.getType() == TransactionType.INCOME){
+                System.out.println(2);
+                amount = amountBeforeEdit + transaction.getAmount();
+            }
         }
-        else{
-            amount = transaction.getAmount();
+        if(typeBeforeEdit == TransactionType.INCOME){
+            if(transaction.getType() == TransactionType.EXPENSE){
+                System.out.println(3);
+                amount = (amountBeforeEdit + transaction.getAmount()) * (-1);
+            }
+            else if(transaction.getType() == TransactionType.INCOME){
+                System.out.println(4);
+                amount = (amountBeforeEdit - transaction.getAmount()) * (-1);
+            }
         }
+        System.out.println("Amount: " + amount);
 
         UserApplication user = transaction.getUser();
         Account account = transaction.getAccount();

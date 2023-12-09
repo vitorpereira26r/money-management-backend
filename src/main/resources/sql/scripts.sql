@@ -10,6 +10,21 @@ SELECT role_id, authority
 SELECT user_id, balance, password, username
 	FROM public.tb_users;
 	
+UPDATE public.tb_users
+	SET user_id=?, balance=?, password=?, username=?
+	WHERE <condition>;
+	
+UPDATE public.tb_users
+	SET balance = 0.0
+	WHERE user_id = 1;
+	
+SELECT account_id, balance, name, user_id
+	FROM public.tb_accounts;
+	
+UPDATE public.tb_accounts
+	SET account_id=?, balance=?, name=?, user_id=?
+	WHERE <condition>;
+	
 SELECT user_id, role_id
 	FROM public.user_role_junction;
 	

@@ -55,10 +55,12 @@ public class TestConfig implements CommandLineRunner {
         Account account = new Account(null, "Itaú", 0.0, admin);
         accountRepository.save(account);
 
-        Category category = new Category(null, "Buy");
-        categoryRepository.save(category);
+        Category category1 = new Category(null, "Buy");
+        Category category2 = new Category(null, "Earn");
+        categoryRepository.save(category1);
+        categoryRepository.save(category2);
 
-        Transaction transaction = new Transaction(null, Instant.now(), TransactionType.EXPENSE, 0.0, "buy", account, admin, category);
+        Transaction transaction = new Transaction(null, Instant.now(), TransactionType.EXPENSE, 0.0, "buy", account, admin, category1);
         transactionRepository.save(transaction);
     }
 }

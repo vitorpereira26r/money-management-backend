@@ -21,8 +21,8 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:5173");
-        config.addAllowedOrigin("https://noteworthyfinance.com");
+        //config.addAllowedOrigin("http://localhost:5173");
+        //config.addAllowedOrigin("https://noteworthyfinance.com");
         config.setAllowedHeaders(Arrays.asList(
                 HttpHeaders.AUTHORIZATION,
                 HttpHeaders.CONTENT_TYPE,

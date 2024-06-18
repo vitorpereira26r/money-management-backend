@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  database:
+    image: postgres:13
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: money_management
+      POSTGRES_USER: vitor
+      POSTGRES_PASSWORD: 12345678
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: money_management
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/money_management
+      SPRING_DATASOURCE_USERNAME: vitor
+      SPRING_DATASOURCE_PASSWORD: 12345678
+
+volumes:
+  postgres_data:

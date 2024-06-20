@@ -44,10 +44,11 @@ public class TestConfig implements CommandLineRunner {
         if(roleRepository.findByAuthority("admin").isPresent()) return;
 
         Role adminRole = roleRepository.save(new Role("ADMIN"));
-        roleRepository.save(new Role("USER"));
+        Role userRole = roleRepository.save(new Role("USER"));
 
         Set<Role> roles = new HashSet<>();
         roles.add(adminRole);
+        roles.add(userRole);
 
         UserApplication admin = new UserApplication(null, "admin", passwordEncoder.encode("password"), roles);
         userRepository.save(admin);

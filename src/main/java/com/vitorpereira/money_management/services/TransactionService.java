@@ -42,8 +42,8 @@ public class TransactionService {
         return repository.save(transaction);
     }
 
-    public List<Transaction> getTransactionsByUserId(Integer id){
-        List<Transaction> transactions = repository.findByUser_Id(id);
+    public List<Transaction> getTransactionsByUsername(String username){
+        List<Transaction> transactions = repository.findByUser_Username(username);
         return transactions;
     }
 

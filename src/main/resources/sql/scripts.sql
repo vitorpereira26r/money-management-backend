@@ -29,12 +29,12 @@ SELECT user_id, role_id
 	FROM public.user_role_junction;
 	
 UPDATE public.user_role_junction
-	SET user_id=?, role_id=?
-	WHERE <condition>;
+	SET user_id=1, role_id=1
+	WHERE user_id=1;
 	
 INSERT INTO public.user_role_junction(
 	user_id, role_id)
-	VALUES (1, 1);
+	VALUES (2, 1);
 	
 SELECT id, name
 	FROM public.tb_categories;

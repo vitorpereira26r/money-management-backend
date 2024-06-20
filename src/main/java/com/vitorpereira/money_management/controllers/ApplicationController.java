@@ -3,13 +3,19 @@ package com.vitorpereira.money_management.controllers;
 import com.vitorpereira.money_management.entities.Account;
 import com.vitorpereira.money_management.entities.Category;
 import com.vitorpereira.money_management.entities.Transaction;
+import com.vitorpereira.money_management.entities.UserApplication;
 import com.vitorpereira.money_management.entities.dtos.AccountDto;
 import com.vitorpereira.money_management.entities.dtos.AccountEditDto;
 import com.vitorpereira.money_management.entities.dtos.TransactionDto;
 import com.vitorpereira.money_management.entities.dtos.TransactionEditDto;
 import com.vitorpereira.money_management.entities.enums.TransactionType;
+import com.vitorpereira.money_management.exceptions.ResourceNotFoundException;
 import com.vitorpereira.money_management.services.ApplicationServices;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,55 +30,65 @@ public class ApplicationController {
         this.service = service;
     }
 
-    @GetMapping(value = "/accounts/user-id/{id}")
-    public ResponseEntity<List<Account>> getAccountsByUserId(@PathVariable Integer id){
-        List<Account> accounts = service.getAccountByUserId(id);
+    private String getUsernameFromToken() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null) {
+            return authentication.getName();
+        }
+        throw new ResourceNotFoundException("Username could not be retrieved from the token.");
+    }
+
+    @GetMapping(value = "/account")
+    public ResponseEntity<List<Account>> getAccounts(){
+        String username = getUsernameFromToken();
+        List<Account> accounts = service.getAccountByUser(username);
         return ResponseEntity.ok(accounts);
     }
 
-    @PostMapping(value = "/account/create")
+    @PostMapping(value = "/account")
     public ResponseEntity<Account> createAccount(@RequestBody AccountDto dto){
         Account account = service.createAccount(dto);
         return ResponseEntity.ok(account);
     }
 
-    @PutMapping(value = "/account/edit/{id}")
+    @PutMapping(value = "/account/{id}")
     public ResponseEntity<Account> editAccountName(@RequestBody AccountEditDto dto, @PathVariable Integer id){
         Account newAccount = service.editAccountName(dto.getName(), id);
         return ResponseEntity.ok(newAccount);
     }
 
-    @DeleteMapping(value = "/account/delete/{id}")
+    @DeleteMapping(value = "/account/{id}")
     public ResponseEntity<Void> deleteAccount(@PathVariable Integer id){
         service.deleteAccount(id);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping(value = "/transactions/user-id/{id}")
-    public ResponseEntity<List<Transaction>> getTransactionsByUserId(@PathVariable Integer id){
-        List<Transaction> transactions = service.getTransactionByUserId(id);
+    @GetMapping(value = "/transaction")
+    public ResponseEntity<List<Transaction>> getTransactionsByUser(){
+        String username = getUsernameFromToken();
+        List<Transaction> transactions = service.getTransactionByUser(username);
         return ResponseEntity.ok(transactions);
     }
 
-    @GetMapping(value = "/transactions/account-id/{id}")
+    @GetMapping(value = "/transactions/{id}")
     public ResponseEntity<List<Transaction>> getTransactionsByAccountId(@PathVariable Integer id){
         List<Transaction> transactions = service.getTransactionsByAccountId(id);
         return ResponseEntity.ok(transactions);
     }
 
-    @PostMapping(value = "/transaction/create")
+    @PostMapping(value = "/transaction")
     public ResponseEntity<Transaction> createTransaction(@RequestBody TransactionDto dto){
         Transaction transaction = service.createTransaction(dto);
         return ResponseEntity.ok(transaction);
     }
 
-    @PutMapping(value = "/transaction/edit/{id}")
+    @PutMapping(value = "/transaction/{id}")
     public ResponseEntity<Transaction> editTransaction(@RequestBody TransactionEditDto dto, @PathVariable Integer id){
         Transaction transaction = service.editTransaction(dto, id);
         return ResponseEntity.ok(transaction);
     }
 
-    @DeleteMapping(value = "/transaction/delete/{id}")
+    @DeleteMapping(value = "/transaction/{id}")
     public ResponseEntity<Void> deleteTransaction(@PathVariable Integer id){
         service.deleteTransaction(id);
         return ResponseEntity.noContent().build();

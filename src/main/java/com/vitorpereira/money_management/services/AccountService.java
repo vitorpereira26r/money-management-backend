@@ -35,9 +35,9 @@ public class AccountService {
         return repository.save(account);
     }
 
-    public List<Account> getAccountByUserId(Integer id){
+    public List<Account> getAccountByUser(String username){
 
-        List<Account> accounts = repository.findByUser_Id(id);
+        List<Account> accounts = repository.findByUser_Username(username);
         return accounts;
     }
 

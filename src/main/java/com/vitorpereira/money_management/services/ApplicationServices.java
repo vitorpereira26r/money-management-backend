@@ -41,8 +41,8 @@ public class ApplicationServices {
         this.categoryService = categoryService;
     }
 
-    public List<Account> getAccountByUserId(Integer id){
-        List<Account> accounts = accountService.getAccountByUserId(id);
+    public List<Account> getAccountByUser(String username){
+        List<Account> accounts = accountService.getAccountByUser(username);
 
         return accounts;
     }
@@ -79,8 +79,8 @@ public class ApplicationServices {
         }
     }
 
-    public List<Transaction> getTransactionByUserId(Integer id){
-        List<Transaction> transactions = transactionService.getTransactionsByUserId(id);
+    public List<Transaction> getTransactionByUser(String username){
+        List<Transaction> transactions = transactionService.getTransactionsByUsername(username);
         return transactions;
     }
 

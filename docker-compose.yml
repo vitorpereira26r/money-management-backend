@@ -5,9 +5,9 @@ services:
     image: postgres:13
     container_name: postgres_db
     environment:
-      POSTGRES_DB: money_management
-      POSTGRES_USER: vitor
-      POSTGRES_PASSWORD: 12345678
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
@@ -23,9 +23,9 @@ services:
     depends_on:
       - database
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/money_management
-      SPRING_DATASOURCE_USERNAME: vitor
-      SPRING_DATASOURCE_PASSWORD: 12345678
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
 
 volumes:
   postgres_data:

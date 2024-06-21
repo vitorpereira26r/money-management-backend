@@ -52,7 +52,7 @@ public class AuthenticationService {
         while(userRepository.findByUsername(username+counter).isPresent()){
             counter++;
         }
-        return username+counter;
+        return username + counter;
     }
 
     public UserApplication registerUser(RegisterUserDto registerDto){

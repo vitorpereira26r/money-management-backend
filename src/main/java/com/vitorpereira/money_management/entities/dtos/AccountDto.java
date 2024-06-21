@@ -6,19 +6,16 @@ import com.vitorpereira.money_management.entities.UserApplication;
 public class AccountDto {
 
     private String name;
-    private Integer userId;
 
     public AccountDto() {
     }
 
     public AccountDto(Account account){
         this.name = account.getName();
-        this.userId = account.getUser().getId();
     }
 
-    public AccountDto(String name, Integer userId) {
+    public AccountDto(String name) {
         this.name = name;
-        this.userId = userId;
     }
 
     public String getName() {
@@ -27,13 +24,5 @@ public class AccountDto {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
     }
 }

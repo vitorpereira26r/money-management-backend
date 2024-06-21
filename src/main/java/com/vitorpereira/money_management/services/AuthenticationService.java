@@ -43,6 +43,18 @@ public class AuthenticationService {
     @Autowired
     private TokenService tokenService;
 
+    private String generateUniqueUsername(String username){
+        if(!userRepository.findByUsername(username).isPresent()){
+            return username;
+        }
+
+        int counter = 1;
+        while(userRepository.findByUsername(username+counter).isPresent()){
+            counter++;
+        }
+        return username+counter;
+    }
+
     public UserApplication registerUser(RegisterUserDto registerDto){
 
         String encodedPassword = encoder.encode(registerDto.getPassword());
@@ -51,7 +63,9 @@ public class AuthenticationService {
         Set<Role> roles = new HashSet<>();
         roles.add(userRole);
 
-        return userRepository.save(new UserApplication(null, registerDto.getUsername(), encodedPassword, roles));
+        String username = generateUniqueUsername(registerDto.getUsername());
+
+        return userRepository.save(new UserApplication(null, username, encodedPassword, roles));
     }
 
     public LoginResponseDto login(CredentialDto credentialDto){

@@ -10,7 +10,6 @@ public class TransactionDto {
     private String description;
 
     private Integer accountId;
-    private Integer userId;
     private Integer categoryId;
 
     public TransactionDto() {
@@ -28,13 +27,6 @@ public class TransactionDto {
             this.accountId = 0;
         }
 
-        if(transaction.getUser() != null){
-            this.userId = transaction.getUser().getId();
-        }
-        else{
-            this.userId = 0;
-        }
-
         if(transaction.getCategory() != null){
             this.categoryId = transaction.getCategory().getId();
         }
@@ -48,14 +40,12 @@ public class TransactionDto {
             Double amount,
             String description,
             Integer accountId,
-            Integer userId,
             Integer categoryId
     ) {
         this.type = type;
         this.amount = amount;
         this.description = description;
         this.accountId = accountId;
-        this.userId = userId;
         this.categoryId = categoryId;
     }
 
@@ -89,14 +79,6 @@ public class TransactionDto {
 
     public void setAccountId(Integer accountId) {
         this.accountId = accountId;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
     }
 
     public Integer getCategoryId() {

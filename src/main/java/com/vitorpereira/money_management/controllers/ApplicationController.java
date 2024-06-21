@@ -47,7 +47,8 @@ public class ApplicationController {
 
     @PostMapping(value = "/account")
     public ResponseEntity<Account> createAccount(@RequestBody AccountDto dto){
-        Account account = service.createAccount(dto);
+        String username = getUsernameFromToken();
+        Account account = service.createAccount(dto, username);
         return ResponseEntity.ok(account);
     }
 
@@ -78,7 +79,7 @@ public class ApplicationController {
 
     @PostMapping(value = "/transaction")
     public ResponseEntity<Transaction> createTransaction(@RequestBody TransactionDto dto){
-        Transaction transaction = service.createTransaction(dto);
+        Transaction transaction = service.createTransaction(dto, getUsernameFromToken());
         return ResponseEntity.ok(transaction);
     }
 

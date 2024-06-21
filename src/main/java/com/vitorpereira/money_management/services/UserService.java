@@ -40,9 +40,10 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("user with id " + id + " not found"));
     }
 
-    public UserApplication updateBalance(Double value, Integer id){
+    public UserApplication updateBalance(Double value, String username){
         try{
-            UserApplication user = userRepository.getReferenceById(id);
+            UserApplication user_aux = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username " + username + " not found"));
+            UserApplication user = userRepository.getReferenceById(user_aux.getId());
 
             Double aux = user.getBalance() + value;
             user.setBalance(aux);
@@ -50,7 +51,7 @@ public class UserService implements UserDetailsService {
             return userRepository.save(user);
         }
         catch (EntityNotFoundException e){
-            throw new ResourceNotFoundException(id);
+            throw new ResourceNotFoundException(username);
         }
     }
 

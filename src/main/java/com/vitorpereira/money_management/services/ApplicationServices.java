@@ -47,9 +47,9 @@ public class ApplicationServices {
         return accounts;
     }
 
-    public Account createAccount(AccountDto dto){
+    public Account createAccount(AccountDto dto, String username){
 
-        UserApplication user = userService.getUserById(dto.getUserId());
+        UserApplication user = userService.getUserByUsername(username);
 
         Account newAccount = accountService.createAccount(dto.getName(), user);
 
@@ -67,7 +67,7 @@ public class ApplicationServices {
             Account acc = accountService.getAccountById(id);
             Double amount = acc.getBalance() * (-1);
 
-            userService.updateBalance(amount, acc.getUser().getId());
+            userService.updateBalance(amount, acc.getUser().getUsername());
 
             accountService.deleteById(id);
         }
@@ -89,7 +89,7 @@ public class ApplicationServices {
         return transactions;
     }
 
-    public Transaction createTransaction(TransactionDto transactionDto){
+    public Transaction createTransaction(TransactionDto transactionDto, String username){
 
         Double amount = 0.0;
         if(transactionDto.getType() == TransactionType.EXPENSE){
@@ -102,7 +102,7 @@ public class ApplicationServices {
         Category category = categoryService.getCategoryById(transactionDto.getCategoryId());
 
         Account account = accountService.updateBalance(amount, transactionDto.getAccountId());
-        UserApplication user = userService.updateBalance(amount, transactionDto.getUserId());
+        UserApplication user = userService.updateBalance(amount, username);
 
         Transaction transaction = transactionService.createTransaction(transactionDto, user, account, category);
 
@@ -111,6 +111,7 @@ public class ApplicationServices {
 
     public Transaction editTransaction(TransactionEditDto dto, Integer id){
         Transaction transactionBeforeEdit = transactionService.getTransactionById(id);
+        System.out.println(transactionBeforeEdit);
         TransactionType typeBeforeEdit = transactionBeforeEdit.getType();
         Double amountBeforeEdit = transactionBeforeEdit.getAmount();
         Transaction transaction = transactionService.editTransaction(dto, id);
@@ -129,6 +130,7 @@ public class ApplicationServices {
             }
             else if(transaction.getType() == TransactionType.INCOME){
                 System.out.println(2);
+                System.out.println(transaction.getAmount());
                 amount = amountBeforeEdit + transaction.getAmount();
             }
         }
@@ -148,7 +150,7 @@ public class ApplicationServices {
         Account account = transaction.getAccount();
 
         accountService.updateBalance(amount, account.getId());
-        userService.updateBalance(amount, user.getId());
+        userService.updateBalance(amount, user.getUsername());
 
         return transaction;
     }
@@ -168,7 +170,7 @@ public class ApplicationServices {
         Account account = transaction.getAccount();
 
         accountService.updateBalance(amount, account.getId());
-        userService.updateBalance(amount, user.getId());
+        userService.updateBalance(amount, user.getUsername());
 
         transactionService.deleteTransactionById(id);
     }

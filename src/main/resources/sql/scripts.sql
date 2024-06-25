@@ -9,6 +9,10 @@ SELECT role_id, authority
 	
 SELECT user_id, balance, password, username
 	FROM public.tb_users;
+
+DELETE FROM public.user_role_junction;
+
+DELETE FROM public.tb_users WHERE user_id IN (52, 53, 54, 2, 102, 103, 104, 152, 153);
 	
 UPDATE public.tb_users
 	SET user_id=?, balance=?, password=?, username=?

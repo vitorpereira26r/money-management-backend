@@ -23,7 +23,8 @@ public class CorsConfig {
         config.setAllowCredentials(true);
         config.addAllowedOrigin("http://localhost:5173");
         config.addAllowedOrigin("http://localhost:5172");
-        config.addAllowedOrigin("https://noteworthyfinance.com");
+        config.addAllowedOrigin("http://app1.vitorpereiraresende.com");
+        config.addAllowedOrigin("https://app1.vitorpereiraresende.com");
         config.setAllowedHeaders(Arrays.asList(
                 HttpHeaders.AUTHORIZATION,
                 HttpHeaders.CONTENT_TYPE,

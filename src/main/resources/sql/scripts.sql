@@ -38,7 +38,7 @@ UPDATE public.user_role_junction
 	
 INSERT INTO public.user_role_junction(
 	user_id, role_id)
-	VALUES (2, 1);
+	VALUES (202, 1);
 	
 SELECT id, name
 	FROM public.tb_categories;

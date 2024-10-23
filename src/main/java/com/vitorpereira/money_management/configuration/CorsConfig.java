@@ -25,6 +25,8 @@ public class CorsConfig {
         config.addAllowedOrigin("http://localhost:5172");
         config.addAllowedOrigin("http://app1.vitorpereiraresende.com");
         config.addAllowedOrigin("https://app1.vitorpereiraresende.com");
+        config.addAllowedOriginPattern("http://*vitorpereiraresende.com");
+        config.addAllowedOriginPattern("https://*vitorpereiraresende.com");
         config.setAllowedHeaders(Arrays.asList(
                 HttpHeaders.AUTHORIZATION,
                 HttpHeaders.CONTENT_TYPE,
